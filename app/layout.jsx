@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar';
 import '@/assets/styles/globals.css'
 import Footer from '@/components/Footer';
+import AuthProvider from '@/components/AuthProvider';
 export const metadata={
         title:'Property Pluse',
         keywords:'rentak,property,real estate',
@@ -10,7 +11,8 @@ export const metadata={
 const MainLayout = ({children}) => {
 
     return (  
-        <html>
+        <AuthProvider>
+            <html>
             <body>
                 <main>
                     <Navbar/>
@@ -19,6 +21,8 @@ const MainLayout = ({children}) => {
                 </main>
             </body>
         </html>
+        </AuthProvider>
+        
     );
 }
  

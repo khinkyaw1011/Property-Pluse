@@ -1,6 +1,9 @@
 import PropertyCard from '@/components/PropertyCard';
-import properties from '@/properties.json'
-const PropertiesPage = () => {
+import connectDB from '@/config/database';
+import Property from '@/models/property';
+const PropertiesPage = async() => {
+    await connectDB();
+     const properties=await Property.find({}).lean()
     return ( <section>
         <div className="container-xl lg:container m-auto px-4 py-6">
             {properties.length === 0 ? (
