@@ -6,13 +6,7 @@ import { usePathname } from "next/navigation";
 import logo from "@/assets/images/logo-white.png";
 import profileDefault from "@/assets/images/profile.png";
 import { FaGoogle } from "react-icons/fa";
-import {
-  signIn,
-  signOut,
-  useSession,
-  getProvider,
-  getProviders,
-} from "next-auth/react";
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 const Navbar = () => {
   const { data: session } = useSession();
   console.log(session);
@@ -24,7 +18,7 @@ const Navbar = () => {
   useEffect(() => {
     const setAuthProviders = async () => {
       const res = await getProviders();
-      setProviders(res);
+      setProviders();
     };
     setAuthProviders();
   }, []);
@@ -111,7 +105,7 @@ const Navbar = () => {
                   Object.values(providers).map((provider, index) => (
                     <button
                       key={index}
-                      onClick={()=>signIn(provider.id)}
+                      onClick={() => signIn(provider.id)}
                       className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
                     >
                       <FaGoogle className="text-white mr-2" />
