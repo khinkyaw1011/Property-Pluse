@@ -9,7 +9,7 @@ import { FaGoogle } from "react-icons/fa";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 const Navbar = () => {
   const { data: session } = useSession();
-  console.log(session);
+  const profileimage=session?.user?.image;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [providers, setProviders] = useState(null);
@@ -18,12 +18,12 @@ const Navbar = () => {
   useEffect(() => {
     const setAuthProviders = async () => {
       const res = await getProviders();
-      setProviders();
+      setProviders(res);
     };
     setAuthProviders();
   }, []);
   return (
-    <nav className="bg-blue-700 border-b border-blue-500">
+    <nav className="bg-blue-700 border-b border-blue-500 sticky top-0 z-40 opacity-95">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-20 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
@@ -161,7 +161,9 @@ const Navbar = () => {
                     <span className="sr-only">Open user menu</span>
                     <Image
                       className="h-8 w-8 rounded-full"
-                      src={profileDefault}
+                      src={profileimage || profileDefault}
+                      width={40}
+                      height={40}
                       alt=""
                     />
                   </button>
@@ -176,6 +178,7 @@ const Navbar = () => {
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                     tabIndex="-1"
+                    
                   >
                     <Link
                       href="/profile"
@@ -183,6 +186,7 @@ const Navbar = () => {
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-0"
+                      onClick={()=>setIsProfileMenuOpen(false)}
                     >
                       Your Profile
                     </Link>
@@ -192,6 +196,7 @@ const Navbar = () => {
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-2"
+                      onClick={()=>setIsProfileMenuOpen(false)}
                     >
                       Saved Properties
                     </Link>
@@ -200,6 +205,10 @@ const Navbar = () => {
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-2"
+                      onClick={()=>{
+                        setIsMobileMenuOpen(false);
+                        signOut();
+                      }}
                     >
                       Sign Out
                     </button>
@@ -241,12 +250,18 @@ const Navbar = () => {
                 Add Property
               </Link>
             )}
-            {!session && (
-              <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
-                <i className="fa-brands fa-google mr-2"></i>
-                <span>Login or Register</span>
-              </button>
-            )}
+            {!session &&
+              providers &&
+              Object.values(providers).map((provider, index) => (
+                <button
+                  key={index}
+                  onClick={() => signIn(provider.id)}
+                  className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4"
+                >
+                  <FaGoogle className="text-white mr-2" />
+                  <span>Login or Register</span>
+                </button>
+              ))}
           </div>
         </div>
       )}
