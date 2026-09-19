@@ -2,6 +2,8 @@ import Navbar from '@/components/Navbar';
 import '@/assets/styles/globals.css'
 import Footer from '@/components/Footer';
 import AuthProvider from '@/components/AuthProvider';
+import { ToastContainer } from 'react-toastify';
+import { GlobalProvider } from '@/context/GlobalContext';
 export const metadata={
         title:'Property Pluse',
         keywords:'rentak,property,real estate',
@@ -12,15 +14,18 @@ const MainLayout = ({children}) => {
 
     return (  
         <AuthProvider>
+            <GlobalProvider>
             <html>
             <body>
                 <main>
                     <Navbar/>
                    {children}
                    <Footer/>
+                   <ToastContainer/>
                 </main>
-            </body>
-        </html>
+               </body>
+            </html>
+            </GlobalProvider>
         </AuthProvider>
         
     );
