@@ -65,6 +65,9 @@ const MessageCard = ({ message }) => {
             {message.phone}
           </a>
         </li>
+       <li>
+         <p classname="text-gray-700">{message.body}</p>
+       </li>
         <li>
           <strong>Received: </strong>
           {new Date(message.createdAt).toLocaleString()}
