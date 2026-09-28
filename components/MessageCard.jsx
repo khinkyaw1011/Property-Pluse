@@ -44,8 +44,7 @@ const MessageCard = ({ message }) => {
         <span className='font-bold'>Property Inquiry: </span>
         {message.property?.name}
       </h2>
-      <p className='text-gray-700'>{message.body}</p>
-
+      
       <ul className='mt-4'>
         <li>
           <strong>Reply Email: </strong>
