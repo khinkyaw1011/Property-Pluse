@@ -66,7 +66,8 @@ const MessageCard = ({ message }) => {
           </a>
         </li>
        <li>
-         <p classname="text-gray-700">{message.body}</p>
+         <strong>Message:</strong>
+         <p classname="text-blue-500">{message.body}</p>
        </li>
         <li>
           <strong>Received: </strong>
